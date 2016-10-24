@@ -48,6 +48,14 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(331);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	__webpack_require__(1);
 
 	var _navbar = __webpack_require__(298);
@@ -62,24 +70,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var React = __webpack_require__(299);
-	var ReactDOM = __webpack_require__(331);
-
 	var styles = {
 		container: {
-			position: 'static',
-			textAlign: 'center',
-			backgroundColor: 'beige'
-		},
-		title: {
-			display: 'inlineBlock'
-		},
-		question: {
-			position: 'static',
-			width: '50%',
-			margin: 'auto',
 			backgroundColor: 'lightgrey',
-			display: 'inlineBlock'
+			padding: '10px',
+			height: 'auto',
+			width: 'auto'
 		}
 	};
 
@@ -109,36 +105,27 @@
 			key: 'render',
 			value: function render() {
 				var text = this.state.situation ? 'yes' : 'no';
-				return React.createElement(
+				return _react2.default.createElement(
 					'div',
 					null,
-					React.createElement(
+					_react2.default.createElement(
 						'div',
 						{
 							style: styles.container
 						},
-						React.createElement(
-							'h1',
-							{ style: styles.title },
-							'This is Chicago Crime'
-						),
-						React.createElement(
-							'div',
-							{ style: styles.question
-							},
-							'Is there crime? ',
-							text
-						),
-						React.createElement('button', { onClick: this.switch })
+						_react2.default.createElement(_navbar2.default, {
+							data: text,
+							'switch': this.switch
+						})
 					)
 				);
 			}
 		}]);
 
 		return App;
-	}(React.Component);
+	}(_react2.default.Component);
 
-	ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -8267,27 +8254,110 @@
 
 /***/ },
 /* 298 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _crimeList = __webpack_require__(469);
+
+	var _crimeList2 = _interopRequireDefault(_crimeList);
+
+	var _mapView = __webpack_require__(470);
+
+	var _mapView2 = _interopRequireDefault(_mapView);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	var styles = {
-		container: {
-			position: 'static',
-			textAlign: 'center',
-			backgroundColor: 'beige'
+		navbar: {
+			backgroundColor: 'pink',
+			margin: '0 auto'
 		},
 		title: {
-			display: 'inlineBlock'
+			display: 'inline-block'
 		},
-		question: {
-			position: 'static',
-			width: '50%',
-			margin: 'auto',
-			backgroundColor: 'lightgrey',
-			display: 'inlineBlock'
-		}
+		button: {
+			display: 'inline-block',
+			float: 'right'
+		},
+		question: {}
 	};
+
+	var Navbar = function (_React$Component) {
+		_inherits(Navbar, _React$Component);
+
+		function Navbar() {
+			_classCallCheck(this, Navbar);
+
+			var _this = _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).call(this));
+
+			_this.state = {
+				toggle: true
+			};
+			// this is where I bind functions
+			return _this;
+		}
+
+		_createClass(Navbar, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						{ style: styles.navbar },
+						_react2.default.createElement(
+							'div',
+							{ style: styles.title },
+							_react2.default.createElement(
+								'h1',
+								null,
+								'This is Chicago Crime'
+							)
+						),
+						_react2.default.createElement(
+							'button',
+							{
+								style: styles.button,
+								onClick: this.props.switch
+							},
+							'Refresh'
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: styles.question
+							},
+							'Is there crime? ',
+							this.props.data
+						)
+					),
+					_react2.default.createElement(_crimeList2.default, null),
+					_react2.default.createElement(_mapView2.default, null)
+				);
+			}
+		}]);
+
+		return Navbar;
+	}(_react2.default.Component);
+
+	exports.default = Navbar;
 
 /***/ },
 /* 299 */
@@ -29469,6 +29539,160 @@
 
 	module.exports = ReactDOMNullInputValuePropHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
+
+/***/ },
+/* 469 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _crimeListItem = __webpack_require__(471);
+
+	var _crimeListItem2 = _interopRequireDefault(_crimeListItem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var styles = {};
+
+	var CrimeList = function (_React$Component) {
+		_inherits(CrimeList, _React$Component);
+
+		function CrimeList() {
+			_classCallCheck(this, CrimeList);
+
+			var _this = _possibleConstructorReturn(this, (CrimeList.__proto__ || Object.getPrototypeOf(CrimeList)).call(this));
+
+			_this.state = {
+				// itemst that api gives for each item
+			};
+			return _this;
+		}
+
+		_createClass(CrimeList, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'From CrimeList'
+					),
+					_react2.default.createElement(_crimeListItem2.default, null)
+				);
+			}
+		}]);
+
+		return CrimeList;
+	}(_react2.default.Component);
+
+	exports.default = CrimeList;
+
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var styles = {};
+
+	var MapView = function (_React$Component) {
+		_inherits(MapView, _React$Component);
+
+		function MapView() {
+			_classCallCheck(this, MapView);
+
+			return _possibleConstructorReturn(this, (MapView.__proto__ || Object.getPrototypeOf(MapView)).call(this));
+		}
+
+		_createClass(MapView, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'From CrimeList'
+					)
+				);
+			}
+		}]);
+
+		return MapView;
+	}(_react2.default.Component);
+
+	exports.default = MapView;
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(299);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+	var CrimeListItem = function CrimeListItem(_ref) {
+	  _objectDestructuringEmpty(_ref);
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      null,
+	      'List Item 1'
+	    )
+	  );
+	};
+
+	exports.default = CrimeListItem;
 
 /***/ }
 /******/ ]);
