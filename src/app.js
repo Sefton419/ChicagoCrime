@@ -1,24 +1,15 @@
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+
 import 'babel-polyfill';
 import Navbar from './components/navbar.js'
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-
 const styles = {
 	container: {
-		position: 'static',
-		textAlign: 'center',
-		backgroundColor: 'beige'
-	},
-	title: {
-		display: 'inlineBlock'
-	},
-	question: {
-		position: 'static',
-		width: '50%',
-		margin: 'auto',
 		backgroundColor: 'lightgrey',
-		display: 'inlineBlock'
+		padding: '10px',
+		height: 'auto',
+		width: 'auto'
 	}
 }
 
