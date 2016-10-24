@@ -1,17 +1,23 @@
 
-const React = require('react');
-const ReactDOM = require('react-dom');
+import React, {Component} from 'react';
+
+import CrimeList from './crimeList.js'
+import MapView from './mapView.js'
 
 const styles = {
+	navbar: {
+		backgroundColor: 'pink',
+		margin: '0 auto'
+	},
 	title: {
-		display: 'inlineBlock'
+		display: 'inline-block'
+	},
+	button: {
+		display: 'inline-block',
+		float: 'right'
 	},
 	question: {
-		position: 'static',
-		width: '50%',
-		margin: 'auto',
-		backgroundColor: 'lightgrey',
-		display: 'inlineBlock'
+
 	}
 }
 
@@ -28,14 +34,23 @@ class Navbar extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1 style={styles.title}> 
-					This is Chicago Crime 
-				</h1>
-				<div style={styles.question}
-				> 
-					Is there crime? {this.props.data} 
+				<div style={styles.navbar}>
+					<div style={styles.title}> 
+						<h1>This is Chicago Crime</h1>
+					</div>
+					<button 
+						style={styles.button}
+						onClick={this.props.switch}
+					>
+					Refresh
+					</button>
+					<div style={styles.question}
+					> 
+						Is there crime? {this.props.data} 
+					</div>
 				</div>
-				<button onClick={this.props.switch}/>
+				<CrimeList />
+				<MapView />
 			</div>
 		)
 	}
