@@ -18,6 +18,11 @@ const styles = {
 	},
 	question: {
 
+	},
+	contentContainer: {
+		borderStyle: 'solid',
+		margin: '0 auto',
+		width: '100%'
 	}
 }
 
@@ -49,8 +54,12 @@ class Navbar extends React.Component {
 						Is there crime? {this.props.data} 
 					</div>
 				</div>
-				<CrimeList />
-				<MapView />
+				<div
+					style={styles.contentContainer}
+				>
+					<CrimeList />
+					<MapView />
+				</div>
 			</div>
 		)
 	}
