@@ -8,7 +8,8 @@ const styles = {
     display: 'inline-block',
   },
   header: {
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'beige'
   }
 }
 
