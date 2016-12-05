@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import CrimeListItem from './crimeListItem.js'
+import CrimeListItem from '../components/crimeListItem.js';
 
 const styles = {
   listContainer: {
@@ -14,7 +14,7 @@ const styles = {
   }
 }
 
-class CrimeList extends React.Component {
+class CrimeList extends Component {
 	constructor() {
 		super()
     this.state = {
