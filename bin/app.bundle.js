@@ -58,17 +58,25 @@
 
 	var _reactRedux = __webpack_require__(172);
 
-	var _navbar = __webpack_require__(195);
+	var _redux = __webpack_require__(179);
+
+	var _reduxDevtoolsExtension = __webpack_require__(195);
+
+	var _navbar = __webpack_require__(196);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _crimeList = __webpack_require__(196);
+	var _crimeList = __webpack_require__(197);
 
 	var _crimeList2 = _interopRequireDefault(_crimeList);
 
-	var _mapView = __webpack_require__(198);
+	var _mapView = __webpack_require__(199);
 
 	var _mapView2 = _interopRequireDefault(_mapView);
+
+	var _reducers = __webpack_require__(200);
+
+	var _reducers2 = _interopRequireDefault(_reducers);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -77,6 +85,7 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	// import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 	// import 'babel-polyfill';
 
@@ -89,8 +98,8 @@
 		}
 	};
 
-	var App = function (_React$Component) {
-		_inherits(App, _React$Component);
+	var App = function (_Component) {
+		_inherits(App, _Component);
 
 		function App() {
 			_classCallCheck(this, App);
@@ -133,9 +142,15 @@
 		}]);
 
 		return App;
-	}(_react2.default.Component);
+	}(_react.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	var createStoreWithMiddleware = (0, _redux.applyMiddleware)()(_redux.createStore);
+
+	_reactDom2.default.render(_react2.default.createElement(
+		_reactRedux.Provider,
+		{ store: createStoreWithMiddleware(_reducers2.default) },
+		_react2.default.createElement(App, null)
+	), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21580,9 +21595,7 @@
 	  }
 
 	  Provider.prototype.render = function render() {
-	    var children = this.props.children;
-
-	    return _react.Children.only(children);
+	    return _react.Children.only(this.props.children);
 	  };
 
 	  return Provider;
@@ -21590,10 +21603,12 @@
 
 	exports["default"] = Provider;
 
+
 	if (process.env.NODE_ENV !== 'production') {
 	  Provider.prototype.componentWillReceiveProps = function (nextProps) {
 	    var store = this.store;
 	    var nextStore = nextProps.store;
+
 
 	    if (store !== nextStore) {
 	      warnAboutReceivingStore();
@@ -21647,8 +21662,9 @@
 	  }
 	  /* eslint-enable no-console */
 	  try {
-	    // This error was thrown as a convenience so that you can use this stack
-	    // to find the callsite that caused this warning to fire.
+	    // This error was thrown as a convenience so that if you enable
+	    // "break on all exceptions" in your console,
+	    // it would pause the execution at this line.
 	    throw new Error(message);
 	    /* eslint-disable no-empty */
 	  } catch (e) {}
@@ -21661,9 +21677,10 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
+	exports.__esModule = true;
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	exports.__esModule = true;
 	exports["default"] = connect;
 
 	var _react = __webpack_require__(1);
@@ -21732,12 +21749,12 @@
 	var nextVersion = 0;
 
 	function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
-	  var options = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
+	  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
 	  var shouldSubscribe = Boolean(mapStateToProps);
 	  var mapState = mapStateToProps || defaultMapStateToProps;
 
-	  var mapDispatch = undefined;
+	  var mapDispatch = void 0;
 	  if (typeof mapDispatchToProps === 'function') {
 	    mapDispatch = mapDispatchToProps;
 	  } else if (!mapDispatchToProps) {
@@ -21747,10 +21764,10 @@
 	  }
 
 	  var finalMergeProps = mergeProps || defaultMergeProps;
-	  var _options$pure = options.pure;
-	  var pure = _options$pure === undefined ? true : _options$pure;
-	  var _options$withRef = options.withRef;
-	  var withRef = _options$withRef === undefined ? false : _options$withRef;
+	  var _options$pure = options.pure,
+	      pure = _options$pure === undefined ? true : _options$pure,
+	      _options$withRef = options.withRef,
+	      withRef = _options$withRef === undefined ? false : _options$withRef;
 
 	  var checkMergedEquals = pure && finalMergeProps !== defaultMergeProps;
 
@@ -21969,11 +21986,12 @@
 	      };
 
 	      Connect.prototype.render = function render() {
-	        var haveOwnPropsChanged = this.haveOwnPropsChanged;
-	        var hasStoreStateChanged = this.hasStoreStateChanged;
-	        var haveStatePropsBeenPrecalculated = this.haveStatePropsBeenPrecalculated;
-	        var statePropsPrecalculationError = this.statePropsPrecalculationError;
-	        var renderedElement = this.renderedElement;
+	        var haveOwnPropsChanged = this.haveOwnPropsChanged,
+	            hasStoreStateChanged = this.hasStoreStateChanged,
+	            haveStatePropsBeenPrecalculated = this.haveStatePropsBeenPrecalculated,
+	            statePropsPrecalculationError = this.statePropsPrecalculationError,
+	            renderedElement = this.renderedElement;
+
 
 	        this.haveOwnPropsChanged = false;
 	        this.hasStoreStateChanged = false;
@@ -23083,6 +23101,25 @@
 /* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	exports.__esModule = true;
+	exports.composeWithDevTools = (
+	  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+	    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ :
+	    function() {
+	      if (arguments.length === 0) return undefined;
+	      var compose = __webpack_require__(179).compose;
+	      if (typeof arguments[0] === 'object') return compose;
+	      return compose.apply(null, arguments);
+	    }
+	);
+
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -23184,7 +23221,7 @@
 	exports.default = Navbar;
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23199,7 +23236,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _crimeListItem = __webpack_require__(197);
+	var _reactRedux = __webpack_require__(172);
+
+	var _crimeListItem = __webpack_require__(198);
 
 	var _crimeListItem2 = _interopRequireDefault(_crimeListItem);
 
@@ -23210,6 +23249,7 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import { bindActionCreators } from 'redux'
 
 	var styles = {
 	  listContainer: {
@@ -23229,15 +23269,27 @@
 	  function CrimeList() {
 	    _classCallCheck(this, CrimeList);
 
-	    var _this = _possibleConstructorReturn(this, (CrimeList.__proto__ || Object.getPrototypeOf(CrimeList)).call(this));
-
-	    _this.state = {
-	      // items that api gives for each item
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (CrimeList.__proto__ || Object.getPrototypeOf(CrimeList)).apply(this, arguments));
 	  }
 
 	  _createClass(CrimeList, [{
+	    key: 'renderCrimes',
+	    value: function renderCrimes() {
+	      return this.props.crimes.map(function (crime) {
+	        return _react2.default.createElement(
+	          'div',
+	          { key: crime.id },
+	          _react2.default.createElement(_crimeListItem2.default, {
+	            description: crime.description,
+	            primary_type: crime.primary_type,
+	            location_description: crime.location_description,
+	            arrest: String(crime.arrest),
+	            key: crime.id
+	          })
+	        );
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -23255,7 +23307,7 @@
 	              'From CrimeList'
 	            )
 	          ),
-	          _react2.default.createElement(_crimeListItem2.default, null)
+	          this.renderCrimes()
 	        )
 	      );
 	    }
@@ -23264,10 +23316,16 @@
 	  return CrimeList;
 	}(_react.Component);
 
-	exports.default = CrimeList;
+	function mapStateToProps(state) {
+	  return {
+	    crimes: state.crimes
+	  };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(CrimeList);
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23276,96 +23334,78 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var styles = {
 	  listItem: {
 	    borderStyle: 'solid',
 	    padding: '3px',
 	    margin: '5px',
-	    backgroundColor: 'ivory'
+	    backgroundColor: 'ivory',
+	    height: 'auto'
 	  }
 	};
 
-	var CrimeListItem = function CrimeListItem(_ref) {
-	  _objectDestructuringEmpty(_ref);
+	var CrimeListItem = function (_Component) {
+	  _inherits(CrimeListItem, _Component);
 
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: styles.listItem },
-	      'List Item'
-	    )
-	  );
-	};
+	  function CrimeListItem(props) {
+	    _classCallCheck(this, CrimeListItem);
+
+	    return _possibleConstructorReturn(this, (CrimeListItem.__proto__ || Object.getPrototypeOf(CrimeListItem)).call(this, props));
+	  }
+
+	  _createClass(CrimeListItem, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { style: styles.listItem },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.props.description
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.props.location_description
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.props.primary_type
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.props.description
+	        ),
+	        'Arrested: ',
+	        this.props.arrest
+	      );
+	    }
+	  }]);
+
+	  return CrimeListItem;
+	}(_react.Component);
 
 	exports.default = CrimeListItem;
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23437,6 +23477,140 @@
 	}(_react2.default.Component);
 
 	exports.default = MapView;
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(179);
+
+	var _reducer_crimes = __webpack_require__(201);
+
+	var _reducer_crimes2 = _interopRequireDefault(_reducer_crimes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var rootReducer = (0, _redux.combineReducers)({
+	  crimes: _reducer_crimes2.default
+	});
+
+	exports.default = rootReducer;
+
+/***/ },
+/* 201 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  return [{
+	    ":@computed_region_43wa_7qmu": "47",
+	    ":@computed_region_6mkv_f3dw": "21202",
+	    ":@computed_region_awaf_s7ux": "47",
+	    ":@computed_region_bdys_3d7i": "715",
+	    ":@computed_region_rpca_8um6": "25",
+	    ":@computed_region_vrxf_vc4k": "49",
+	    "arrest": false,
+	    "beat": "0432",
+	    "block": "040XX E 106TH ST",
+	    "case_number": "HZ530351",
+	    "community_area": "52",
+	    "date": "2016-11-26T23:50:00.000",
+	    "description": "AGGRAVATED",
+	    "district": "004",
+	    "domestic": false,
+	    "fbi_code": "03",
+	    "id": "10765329",
+	    "iucr": "0330",
+	    "latitude": "41.702686497",
+	    "location": {
+	      "type": "Point",
+	      "coordinates": [-87.525985, 41.702686]
+	    },
+	    "location_description": "RESTAURANT",
+	    "longitude": "-87.525984871",
+	    "primary_type": "ROBBERY",
+	    "updated_on": "2016-12-03T15:47:46.000",
+	    "ward": "10",
+	    "x_coordinate": "1204717",
+	    "y_coordinate": "1835284",
+	    "year": "2016"
+	  }, {
+	    ":@computed_region_43wa_7qmu": "13",
+	    ":@computed_region_6mkv_f3dw": "21554",
+	    ":@computed_region_awaf_s7ux": "18",
+	    ":@computed_region_bdys_3d7i": "608",
+	    ":@computed_region_rpca_8um6": "59",
+	    ":@computed_region_vrxf_vc4k": "70",
+	    "arrest": false,
+	    "beat": "2223",
+	    "block": "088XX S HALSTED ST",
+	    "case_number": "HZ530348",
+	    "community_area": "71",
+	    "date": "2016-11-26T23:50:00.000",
+	    "description": "DOMESTIC BATTERY SIMPLE",
+	    "district": "022",
+	    "domestic": false,
+	    "fbi_code": "08B",
+	    "id": "10765311",
+	    "iucr": "0486",
+	    "latitude": "41.73360415",
+	    "location": {
+	      "type": "Point",
+	      "coordinates": [-87.643548, 41.733604]
+	    },
+	    "location_description": "APARTMENT",
+	    "longitude": "-87.643547788",
+	    "primary_type": "BATTERY",
+	    "updated_on": "2016-12-03T15:47:46.000",
+	    "ward": "21",
+	    "x_coordinate": "1172523",
+	    "y_coordinate": "1846271",
+	    "year": "2016"
+	  }, {
+	    ":@computed_region_43wa_7qmu": "46",
+	    ":@computed_region_6mkv_f3dw": "21184",
+	    ":@computed_region_awaf_s7ux": "41",
+	    ":@computed_region_bdys_3d7i": "37",
+	    ":@computed_region_rpca_8um6": "28",
+	    ":@computed_region_vrxf_vc4k": "29",
+	    "arrest": false,
+	    "beat": "1223",
+	    "block": "022XX W WALNUT ST",
+	    "case_number": "HZ530361",
+	    "community_area": "28",
+	    "date": "2016-11-26T23:50:00.000",
+	    "description": "TO VEHICLE",
+	    "district": "012",
+	    "domestic": true,
+	    "fbi_code": "14",
+	    "id": "10765307",
+	    "iucr": "1320",
+	    "latitude": "41.885772579",
+	    "location": {
+	      "type": "Point",
+	      "coordinates": [-87.682266, 41.885773]
+	    },
+	    "location_description": "STREET",
+	    "longitude": "-87.682265862",
+	    "primary_type": "CRIMINAL DAMAGE",
+	    "updated_on": "2016-12-03T15:47:46.000",
+	    "ward": "27",
+	    "x_coordinate": "1161535",
+	    "y_coordinate": "1901638",
+	    "year": "2016"
+	  }];
+	};
 
 /***/ }
 /******/ ]);

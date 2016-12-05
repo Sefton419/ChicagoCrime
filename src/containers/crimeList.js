@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux'
 
 import CrimeListItem from '../components/crimeListItem.js';
 
@@ -15,12 +17,23 @@ const styles = {
 }
 
 class CrimeList extends Component {
-	constructor() {
-		super()
-    this.state = {
-      // items that api gives for each item
-    }
-	}
+
+  renderCrimes() {
+    return this.props.crimes.map((crime) => {
+      return (
+        <div key={crime.id}>
+          <CrimeListItem 
+            description={crime.description}
+            primary_type={crime.primary_type}
+            location_description={crime.location_description}
+            arrest={String(crime.arrest)}
+            key={crime.id}  
+          />
+        </div>
+      )
+    }) 
+  }
+
 	render() {
 		return (
 			<div style={styles.listContainer}>
@@ -28,11 +41,25 @@ class CrimeList extends Component {
           <div style={styles.header}>
   				  <h1>From CrimeList</h1>
           </div>
-          <CrimeListItem />
+          {this.renderCrimes()}
         </div>
 			</div>
 		)
 	}
 }
 
-export default CrimeList;
+function mapStateToProps(state) {
+  return {
+    crimes: state.crimes
+  };
+}
+
+export default connect(mapStateToProps)(CrimeList);
+
+
+
+
+
+
+
+

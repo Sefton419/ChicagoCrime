@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 // import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 // import 'babel-polyfill';
 
 import Navbar from './components/navbar.js'
 import CrimeList from './containers/crimeList.js'
 import MapView from './components/mapView.js'
+import reducers from './reducers';
 
 const styles = {
 	container: {
@@ -17,7 +21,7 @@ const styles = {
 	}
 }
 
-class App extends React.Component {
+class App extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -49,7 +53,11 @@ class App extends React.Component {
 	}
 }
 
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+
 ReactDOM.render(
-	<App />,
+	<Provider store={createStoreWithMiddleware(reducers)}>
+		<App />
+	</Provider>,
 	document.getElementById('app')
 );
