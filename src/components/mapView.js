@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
 
 const styles = {
-
+  mapContainer: {
+    verticalAlign: 'top',
+    borderStyle: 'solid',
+    width: '550px',
+    display: 'inline-block',
+  },
+  header: {
+    textAlign: 'center',
+    backgroundColor: 'beige'
+  }
 }
 
 class MapView extends React.Component {
@@ -10,9 +19,13 @@ class MapView extends React.Component {
 	}
 	render() {
 		return (
-			<div>  
-				<h1>From CrimeList</h1>
-			</div>
+      <div style={styles.mapContainer}>
+        <div>
+          <div style={styles.header}>
+            <h1>From MapView</h1>
+          </div>
+        </div>
+      </div>
 		)
 	}
 }

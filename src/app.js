@@ -1,19 +1,27 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import 'babel-polyfill';
+// import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+// import 'babel-polyfill';
+
 import Navbar from './components/navbar.js'
+import CrimeList from './containers/crimeList.js'
+import MapView from './components/mapView.js'
+import reducers from './reducers';
 
 const styles = {
 	container: {
 		backgroundColor: 'lightgrey',
 		padding: '10px',
-		height: 'auto',
-		width: 'auto'
+		height: '800px',
+		width: '1250px'
 	}
 }
 
-class App extends React.Component {
+class App extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -32,20 +40,24 @@ class App extends React.Component {
 		const text = this.state.situation ? 'yes' : 'no';
 		return (
 			<div>
-				<div 
-					style={styles.container}
-				>
+				<div style={styles.container}>
 					<Navbar 
 						data={text}
 						switch={this.switch}
 					/>
+					<CrimeList />
+					<MapView />
 				</div>
 			</div>
 		);
 	}
 }
 
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+
 ReactDOM.render(
-	<App />,
+	<Provider store={createStoreWithMiddleware(reducers)}>
+		<App />
+	</Provider>,
 	document.getElementById('app')
 );
