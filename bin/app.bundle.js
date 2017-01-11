@@ -23152,7 +23152,6 @@
 			display: 'inline-block',
 			float: 'right'
 		},
-		question: {},
 		contentContainer: {
 			borderStyle: 'solid',
 			margin: '0 auto',
